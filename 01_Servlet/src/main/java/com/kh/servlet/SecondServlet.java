@@ -42,5 +42,4 @@ public class SecondServlet extends HttpServlet {
 		out.write("</body>");
 		out.write("</html>");
 	}
-
 }

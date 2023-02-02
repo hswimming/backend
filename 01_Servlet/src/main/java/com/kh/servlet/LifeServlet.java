@@ -51,5 +51,4 @@ public class LifeServlet extends HttpServlet {
 		
 		doGet(request, response);
 	}
-
 }

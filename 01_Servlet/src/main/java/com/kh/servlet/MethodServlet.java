@@ -10,14 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 @WebServlet("/Method.do")
 public class MethodServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     public MethodServlet() {
-        
-    
     }
 
 	@Override
@@ -72,5 +69,4 @@ public class MethodServlet extends HttpServlet {
 
 		doGet(request, response);
 	}
-
 }

@@ -45,8 +45,6 @@ public class FirstServlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
 	}
 	// doget, dopost 서버에서 데이터를 전송/전달 받는 메소드	
 }
