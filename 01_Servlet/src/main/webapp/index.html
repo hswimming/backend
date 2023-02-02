@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>서블릿(Servlet)</title>
+</head>
+<body>
+	<h1>1. 서블릿</h1>
+	
+	<h2>1) 서블릿</h2>
+	<p>
+		서블릿은 웹 브라우저로부터 요청을 받아 처리하고 결과를 다시 웹 브라우저로 전송하는 역할을 한다.
+		일반적인 자바 클래스와 다르게 `javax.servlet.http.HttpServlet` 클래스를 상속해야 한다.
+	</p>
+	
+	<a href="first.do">View Details</a>
+	<!-- <a href="/first.do">View Details</a> -->
+	<!-- <a href="http://localhost:8088/_01_Servelte/first.do">View Details</a> -->
+	<a href="second.do">View Details</a>
+	
+	<h2>2) 서블릿 생명 주기(Life Cycle)</h2>
+	<p>
+		객체가 생성 후 소멸되기까지의 과정을 라이프 사이클이라고 한다. <br>
+		첫 번째 요청일 경우, 서블릿 객체를 생성하고 init() 메소드를 호출한다.<br>
+    	이후 요청에 대해서는 서블릿 객체 생성, init()메소드는 호출하지 않는다.<br>
+		다음에 service() 메소드가 클라이언트 요청 방식에 따라 doGet() 또는 doPost() 메소드를 호출한다.<br>
+		최종적으로 서블릿이 서비스되지 않았을 때 destroy() 메소드를 호출한다.<br>
+	</p>
+	<a href="Life.do">View Details</a>
+	
+	<h2>3) HTTP 요청 처리</h2>
+	<p>
+		1) GET 방식은 URL에 데이터를 포함시켜 요청하는 방법이다. [로그인과 같은 방식은 GET방식에 부적합하다.] <br>
+		2) POST 방식은 데이터를 노출하지 않고, 요청하는 방법이다. [보안에 민감한 로그인과 개인 정보]
+	</p>
+	
+	<a href="views/userForm.html">View Details</a>
+</body>
+</html>
