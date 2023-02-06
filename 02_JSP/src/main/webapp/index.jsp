@@ -1,3 +1,4 @@
+<%@page import="java.util.Arrays"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -48,6 +49,46 @@
 	</ol>
 	
 	<a href="views/directive">View Details</a>
+	
+	<h2>4. JSP 내장 객체</h2>
+	<p>
+		JSP 파일이 자바 코드로 생성될 때 (서블릿으로 생성될 때) 자동으로 추가되는 객체들을 내장 객체라고 한다. <br>
+		즉, JSP 파일 내부에서 개발자가 직접 선언하지 않아도 바로 사용이 가능한 객체를 내장 객체라 한다.
+	</p>
+	<ol>
+		<li>request</li>
+		<li>response</li>
+		<li>out</li>
+		<li>session</li>
+		<li>application</li>
+		<li>page</li>
+		<li>pageContext</li>
+		<li>exception</li>
+	</ol>
+	
+	<%-- <%= session.getAttribute("userId") %> <br>
+	<%
+		Cookie[] cookies = request.getCookies();
+		Arrays.stream(cookies).forEach(cookie -> System.out.println(cookie.getValue()));
+	%>
+	--%>
+	
+	<a href="views/objects">View Details</a>
+	
+	<h2>5. 영역 객체</h2>
+	<p>
+		JSP에서 제공하는 내장 객체들 중에 pageContext, request, session, application 객체는 해당 객체에 정의된 유효한 범위를 갖는다. 
+		해당 객체들은 유효한 범위 안에서 필요한 데이터를 서로 공유할 수 있고 이 공유되는 데이터를 속성(Attribute)이라 한다.
+	</p>
+	
+	<ol>
+		<li>Page 영역</li>
+		<li>Request 영역</li>
+		<li>Session 영역</li>
+		<li>Application 영억</li>
+	</ol>
+	
+	<a href="views/scope">View Details</a>
 	
 </body>
 </html>

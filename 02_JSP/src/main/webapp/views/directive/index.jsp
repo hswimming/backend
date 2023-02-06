@@ -6,6 +6,7 @@
 	<section>
 		<h2>개인 정보 입력</h2>
 		
+		<!-- 사용자로부터 입력값을 받기 전에 method="GET" encoding 처리를 해야 문자가 깨지지 않는다. -->
 		<form action="userFormResult.jsp" method="GET">
 			<label for="userName">이름 : </label>
 			<input type="text" name="userName" id="userName"><br>

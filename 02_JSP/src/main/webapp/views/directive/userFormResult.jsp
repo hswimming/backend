@@ -2,6 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	
+	request.setCharacterEncoding("UTF-8");
+
 	// 폼 파라미터 값 읽어오기
 	String userName = request.getParameter("userName");
 	String userAge = request.getParameter("userAge");
