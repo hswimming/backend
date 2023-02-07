@@ -1,11 +1,15 @@
 package com.kh.el.model.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Setter
 @Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 public class Student {
 	

@@ -30,7 +30,7 @@ public class ELServlet extends HttpServlet {
 		request.setAttribute("student", new Student("황수영", 19, 80, 80));
 		request.setAttribute("scope", "Request 영역");
 		
-		// Session 영역에 디이터를
+		// Session 영역에 데이터를 저장
 		session.setAttribute("classRoom", "S 강의장");
 		session.setAttribute("student", new Student("문인수", 24, 60, 70));
 		session.setAttribute("scope", "Session 영역");
