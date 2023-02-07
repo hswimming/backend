@@ -34,7 +34,7 @@
 	<c:set var="result" value="${ num1 + num2 }" scope="session"/>
 	
 	<c:set var="array" scope="application">
-		red, orange, yellow, green, blue
+		red, orange, yellow, green, blue <!-- ,(콤마)로 구분하면 배열로 선언 -->
 	</c:set>
 	
 	<!-- EL 구문 사용 가능 -->
