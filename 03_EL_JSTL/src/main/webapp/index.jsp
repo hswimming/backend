@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:set var="contextPath" value="${ pageContext.request.contextPath }"/>
@@ -83,6 +82,20 @@
 	</p>
 	
 	<a href="${ contextPath }/views/actiontag/jstl/core.jsp">JSTL Core</a>
+	
+	<h4>2-2) JSTL Formatting Library</h4>
+	<p>
+		날짜, 시간, 숫자 데이터의 출력 형식을 지정할 때 사용하는 액션 태그를 제공한다.
+	</p>
+	
+	<a href="${ contextPath }/views/actiontag/jstl/formatting.jsp">JSTL Formatting</a>
+	
+	<h4>2-3) JSTL Function Library</h4>
+	<p>
+		문자열 처리에 관한 메소드들을 EL 구문에서 사용할 수 있게 하는 라이브러리이다.
+	</p>
+	
+	<a href="${ contextPath }/views/actiontag/jstl/function.jsp">JSTL Function</a>
 	
 </body>
 </html>
