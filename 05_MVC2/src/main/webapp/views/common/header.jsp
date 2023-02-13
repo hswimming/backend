@@ -54,7 +54,7 @@
 					</tr>
 					<tr>
 						<td>
-							<button>내 정보</button>
+							<button onclick="location.href='${ path }/member/myPage'">내 정보</button>
 						</td>
 						<td>
 							<button onclick="location.replace('${ path }/Logout')">로그아웃</button>
@@ -66,7 +66,7 @@
 		<nav>
 			<ul class="main-nav">
 				<li class="home"><a href="${ path }/">Home</a></li>
-				<li id="board"><a href="${ path }/">게시판</a></li>
+				<li id="board"><a href="${ path }/board/list">게시판</a></li>
 				<li id="admin-member"><a href="${ path }/">회원관리</a></li>
 			</ul>
 		</nav>

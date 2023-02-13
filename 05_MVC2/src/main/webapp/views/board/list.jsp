@@ -47,28 +47,29 @@
 		</table>
 		<div id="pageBar">
 			<!-- 맨 처음으로 -->
-			<button>&lt;&lt;</button>
+			<button onclick="location.href='${ path }/board/list?page=1'">&lt;&lt;</button>
 
 			<!-- 이전 페이지로 -->
-			<button>&lt;</button>
+			<button onclick="location.href='${ path }/board/list?page=${ pageInfo.prevPage }'">&lt;</button>
 
 			<!--  10개 페이지 목록 -->
-			<button disabled>1</button>
-			<button>2</button>
-			<button>3</button>
-			<button>4</button>
-			<button>5</button>
-			<button>6</button>
-			<button>7</button>
-			<button>8</button>
-			<button>9</button>
-			<button>10</button>
+			<c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" varStatus="status">
+				<c:choose>
+					<c:when test="${ status.current == pageInfo.currentPage }">
+						<button disabled>${ status.current }</button>
+					</c:when>
+					<c:otherwise>
+						<button onclick="location.href='${ path }/board/list?page=${ status.current }'">${ status.current }</button>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			
 
 			<!-- 다음 페이지로 -->
-			<button>&gt;</button>
+			<button onclick="location.href='${ path }/board/list?page=${ pageInfo.nextPage }'">&gt;</button>
 
 			<!-- 맨 끝으로 -->
-			<button>&gt;&gt;</button>
+			<button onclick="location.href='${ path }/board/list?page=${ pageInfo.maxPage }'">&gt;&gt;</button>
 		</div>
 	</div>
 </section>

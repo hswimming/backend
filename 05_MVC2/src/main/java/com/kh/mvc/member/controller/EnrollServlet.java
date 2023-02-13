@@ -36,8 +36,13 @@ public class EnrollServlet extends HttpServlet {
 		member.setPhone(request.getParameter("phone"));
 		member.setEmail(request.getParameter("email"));
 		member.setAddress(request.getParameter("address"));
-		member.setHobby(String.join(",", request.getParameterValues("hobby")));
+//		member.setHobby(String.join(",", request.getParameterValues("hobby")));
 		// 취미가 여러개일 경우 문자열이 배열로 옴 -> 구분자 지정(","), 하나의 문자열로 만들어 주는 메소드 사용
+		
+		String hobby = request.getParameterValues("hobby") != null ?
+				String.join(",", request.getParameterValues("hobby")) : null;
+		
+		member.setHobby(hobby);
 		
 		System.out.println(member);
 		
