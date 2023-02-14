@@ -11,10 +11,10 @@ import javax.servlet.http.HttpSession;
 import com.kh.mvc.member.model.vo.Member;
 
 @WebServlet(name = "myPage", urlPatterns = { "/member/myPage" })
-public class MyPageServlet extends HttpServlet {
+public class MemberMyPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public MyPageServlet() {
+    public MemberMyPageServlet() {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

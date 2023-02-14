@@ -31,36 +31,44 @@
 		<table id="tbl-board">
 			<tr>
 				<th>글번호</th>
-				<td></td>
+				<td>${ board.no }</td>
 			</tr>
 			<tr>
 				<th>제 목</th>
-				<td></td>
+				<td>${ board.title }</td>
 			</tr>
 			<tr>
 				<th>작성자</th>
-				<td></td>
+				<td>${ board.writerId }</td>
 			</tr>
 			<tr>
 				<th>조회수</th>
-				<td></td>
+				<td>${ board.readCount }</td>
 			</tr>
 			<tr>
 				<th>첨부파일</th>
 				<td>
-					<span style="color: gray;"> - </span>
+					<c:if test="${ empty board.originalFileName }">
+						<span> - </span>
+					</c:if>
+					<c:if test="${ not empty board.originalFileName }">
+						<span> ${ board.originalFileName } </span>
+					</c:if>
 				</td>
 			</tr>
 			<tr>
 				<th>내 용</th>
-				<td></td>
+				<td>${ board.content }</td>
 			</tr>
 			<%--글작성자/관리자인경우 수정삭제 가능 --%>
 			<tr>
 				<th colspan="2">
-					<button type="button">수정</button>
-					<button type="button">삭제</button>
-					<button type="button">목록으로</button>
+					<c:if test="${ not empty loginMember && loginMember.id == board.writerId }">
+						<button type="button" onclick="location.href='${ path }/board/update?no=${ board.no }'">수정</button>
+						<button type="button">삭제</button>
+					</c:if>
+					
+					<button type="button" onclick="location.href='${ path }/board/list'">목록으로</button>
 				</th>
 			</tr>
 		</table>

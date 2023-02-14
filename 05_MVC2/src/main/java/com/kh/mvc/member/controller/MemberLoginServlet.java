@@ -15,10 +15,10 @@ import com.kh.mvc.member.model.vo.Member;
 
 @WebServlet(name = "login", urlPatterns = { "/login" })
 //@WebServlet(name = "login", urlPatterns = { "/login", "/log", "/in" }) // 여러개일 경우
-public class LoginServlet extends HttpServlet {
+public class MemberLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-    public LoginServlet() {
+    public MemberLoginServlet() {
     }
 
     @Override

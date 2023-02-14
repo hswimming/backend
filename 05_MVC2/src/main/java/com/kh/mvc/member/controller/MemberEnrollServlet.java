@@ -11,10 +11,10 @@ import com.kh.mvc.member.model.service.MemberService;
 import com.kh.mvc.member.model.vo.Member;
 
 @WebServlet(name = "enroll", urlPatterns = { "/member/enroll" })
-public class EnrollServlet extends HttpServlet {
+public class MemberEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public EnrollServlet() {
+    public MemberEnrollServlet() {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

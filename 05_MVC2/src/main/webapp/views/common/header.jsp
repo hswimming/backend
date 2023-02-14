@@ -57,7 +57,7 @@
 							<button onclick="location.href='${ path }/member/myPage'">내 정보</button>
 						</td>
 						<td>
-							<button onclick="location.replace('${ path }/Logout')">로그아웃</button>
+							<button onclick="location.replace('${ path }/logout')">로그아웃</button>
 						</td>
 					</tr>
 				</table>

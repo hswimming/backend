@@ -12,10 +12,10 @@ import com.kh.mvc.member.model.service.MemberService;
 import com.kh.mvc.member.model.vo.Member;
 
 @WebServlet(name = "update", urlPatterns = { "/member/update" })
-public class UpdateServlet extends HttpServlet {
+public class MemberUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public UpdateServlet() {
+    public MemberUpdateServlet() {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

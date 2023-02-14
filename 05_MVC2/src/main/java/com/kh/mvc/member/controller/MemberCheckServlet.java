@@ -14,10 +14,10 @@ import com.google.gson.Gson;
 import com.kh.mvc.member.model.service.MemberService;
 
 @WebServlet("/member/idCheck")
-public class CheckServlet extends HttpServlet {
+public class MemberCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public CheckServlet() {
+    public MemberCheckServlet() {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

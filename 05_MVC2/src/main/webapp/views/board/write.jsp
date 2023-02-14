@@ -44,7 +44,8 @@
 <section id="content">
 	<div id='board-write-container'>
 		<h2>게시판 작성</h2>
-		<form action="${ path }/board/write" method="POST"  enctype="">
+		<!-- nctype="multipart/form-data" : 파일을 그대로 보내는 코드, 일반 리퀘스트로는 파라미터 객체를 받아올 수 없기 때문에 라이브러리를 추가해줘야 한다. -->
+		<form action="${ path }/board/write" method="POST" enctype="multipart/form-data">
 			<table id='tbl-board'>
 				<tr>
 					<th>제목</th>
@@ -52,7 +53,7 @@
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td><input type="text" name="writer" value="" readonly></td>
+					<td><input type="text" name="writer" value="${ loginMember.id }" readonly></td>
 				</tr>
 				<tr>
 					<th>첨부파일</th>
