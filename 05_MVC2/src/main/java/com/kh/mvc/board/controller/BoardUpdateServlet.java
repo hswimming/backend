@@ -1,5 +1,6 @@
 package com.kh.mvc.board.controller;
 
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,7 @@ public class BoardUpdateServlet extends HttpServlet {
 		Member loginMember = (session == null) ? null : (Member) session.getAttribute("loginMember");
     	
 		if (loginMember != null) {
-			Board board = new BoardService().getBoardByNo(Integer.parseInt(request.getParameter("no")));
+			Board board = new BoardService().getBoardByNo(Integer.parseInt(request.getParameter("no")), true);
 			
 			if (board != null && loginMember.getId().equals(board.getWriterId())) {
 				request.setAttribute("board", board);
@@ -64,12 +65,28 @@ public class BoardUpdateServlet extends HttpServlet {
 //	    	MultipartRequest mr = new MultipartRequest(request, path, maxSize, encoding, new DefaultFileRenamePolicy());
 	    	MultipartRequest mr = new MultipartRequest(request, path, maxSize, encoding, new FileRename());
 	    	
-	    	if (loginMember.getId().equals(mr.getParameter("writer"))) {
-	    		Board board = new Board();
-	    		
-	    		board.setNo(Integer.parseInt(mr.getParameter("no")));
+	    	Board board = new BoardService().getBoardByNo(Integer.parseInt(mr.getParameter("no")), true);
+	    	
+	    	if (board != null && loginMember.getId().equals(board.getWriterId())) {
 	    		board.setTitle(mr.getParameter("title"));
 	    		board.setContent(mr.getParameter("content"));
+	    		
+	    		String originalFileName = mr.getOriginalFileName("upfile");
+	    		String filesystemName = mr.getFilesystemName("upfile");
+	    		
+	    		// 게시글 수정 작업을 할 때 파일이 업로드 되었는지 확인
+	    		if(originalFileName != null && filesystemName != null) {
+	    			
+	    			// 기존에 업로드 된 파일 삭제
+	    			File file = new File(path + "/" + board.getRenamedFileName()); // 변경 하기 전에 가져온다.
+	    			
+	    			if (file.exists()) {
+	    				file.delete();
+	    			}
+	    			
+	    			board.setOriginalFileName(originalFileName);
+	    			board.setRenamedFileName(filesystemName);
+	    		}
 	    		
 	    		int result = new BoardService().save(board); // 영향 받은 행의 개수를 리턴
 	    		

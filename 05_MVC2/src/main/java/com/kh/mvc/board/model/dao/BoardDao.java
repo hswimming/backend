@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.mvc.board.model.vo.Board;
+import com.kh.mvc.board.model.vo.Reply;
 import com.kh.mvc.common.util.PageInfo;
 
 import static com.kh.mvc.common.jdbc.JDBCTemplate.close;
@@ -139,6 +140,8 @@ public class BoardDao {
 				board.setOriginalFileName(rs.getString("ORIGINAL_FILENAME"));
 				board.setRenamedFileName(rs.getString("RENAMED_FILENAME"));
 				board.setContent(rs.getString("CONTENT"));
+				
+				board.setReplies(this.getRepliesByNo(connection, no)); // 댓글 조회
 				board.setCreateDate(rs.getDate("CREATE_DATE"));
 				board.setModifyDate(rs.getDate("MODIFY_DATE"));
 			}
@@ -183,14 +186,137 @@ public class BoardDao {
 	public int updateBoard(Connection connection, Board board) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "UPDATE BOARD SET TITLE=?,CONTENT=?,MODIFY_DATE=SYSDATE WHERE NO=?";
+		String query = "UPDATE BOARD SET TITLE=?,CONTENT=?,ORIGINAL_FILENAME=?,RENAMED_FILENAME=?,MODIFY_DATE=SYSDATE WHERE NO=?";
 		
 		try {
 			pstmt = connection.prepareStatement(query);
 			
 			pstmt.setString(1, board.getTitle());
 			pstmt.setString(2, board.getContent());
-			pstmt.setInt(3, board.getNo());
+			pstmt.setString(3, board.getOriginalFileName());
+			pstmt.setString(4, board.getRenamedFileName());
+			pstmt.setInt(5, board.getNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateStatus(Connection connection, int no, String status) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE BOARD SET STATUS=? WHERE NO=?";
+
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setString(1, status);;
+			pstmt.setInt(2, no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public List<Reply> getRepliesByNo(Connection connection, int no) {
+		List<Reply> replies = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String query =
+					 	 "SELECT R.NO, "
+						 + "R.BOARD_NO, "
+						 + "R.CONTENT, "
+						 + "M.ID, "
+						 + "R.CREATE_DATE, "
+						 + "R.MODIFY_DATE "
+					 + "FROM REPLY R "
+					 + "JOIN MEMBER M ON(R.WRITER_NO = M.NO) "
+					 + "WHERE R.STATUS='Y' AND BOARD_NO=? "
+					 + "ORDER BY R.NO DESC";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Reply reply = new Reply();
+				
+				reply.setNo(rs.getInt("NO"));
+				reply.setBoardNo(rs.getInt("BOARD_NO"));
+				reply.setContent(rs.getString("CONTENT"));
+				reply.setWriterId(rs.getString("ID"));
+				reply.setCreateDate(rs.getDate("CREATE_DATE"));
+				reply.setModifyDate(rs.getDate("MODIFY_DATE"));
+				
+				replies.add(reply);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		 
+		return replies;
+	}
+
+	public int insertReply(Connection connection, Reply reply) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "INSERT INTO REPLY VALUES(SEQ_REPLY_NO.NEXTVAL, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT)";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			pstmt.setInt(1, reply.getBoardNo());
+			pstmt.setInt(2, reply.getWriterNo());
+			pstmt.setString(3, reply.getContent());
+			
+			result = pstmt.executeUpdate();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateReadCount(Connection connection, Board board) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE BOARD SET READCOUNT=? WHERE NO=?";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			
+			board.setReadCount(board.getReadCount() + 1);
+			
+			pstmt.setInt(1, board.getReadCount());
+			pstmt.setInt(2, board.getNo());
 			
 			result = pstmt.executeUpdate();
 			

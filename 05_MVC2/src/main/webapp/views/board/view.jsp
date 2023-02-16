@@ -52,7 +52,14 @@
 						<span> - </span>
 					</c:if>
 					<c:if test="${ not empty board.originalFileName }">
-						<span> ${ board.originalFileName } </span>
+						<a href="javascript:" id="fileDown"> <!-- a href="javascript:" 쓰는 이유? a 태그 동작 안되게 -->
+							<span> ${ board.originalFileName } </span>
+						</a>
+						<%-- 파일 다운로드 시 저장이 프로젝트 경로로 되는 경우
+						<a href="${ path }/resources/upload/board/${ board.renamedFileName }" download="${ board.originalFileName }">
+							<span> ${ board.originalFileName } </span>
+						</a>
+						--%>
 					</c:if>
 				</td>
 			</tr>
@@ -65,7 +72,7 @@
 				<th colspan="2">
 					<c:if test="${ not empty loginMember && loginMember.id == board.writerId }">
 						<button type="button" onclick="location.href='${ path }/board/update?no=${ board.no }'">수정</button>
-						<button type="button">삭제</button>
+						<button type="button" id="btnDelete">삭제</button>
 					</c:if>
 					
 					<button type="button" onclick="location.href='${ path }/board/list'">목록으로</button>
@@ -75,28 +82,61 @@
 		<div id="comment-container">
 	    	<div class="comment-editor">
 	    		<form action="${ path }/board/reply" method="POST">
-	    			<input type="hidden" name="boardNo" value="">
-	    			<input type="hidden" name="writer" value="">
-					<textarea name="content" cols="55" rows="3"></textarea>
+	    			<input type="hidden" name="boardNo" value="${ board.no }">
+					<textarea name="content" id="replyContent" cols="55" rows="3"></textarea>
 					<button type="submit" id="btn-insert">등록</button>	    			
 	    		</form>
 	    	</div>
 	    </div>
 	    <table id="tbl-comment">
-    	   	<tr class="level1">
-	    		<td>
-	    			<sub class="comment-writer">aa</sub>
-	    			<sub class="comment-date">2021.05.07</sub>
-	    			<br>
-	    			컨텐츠
-	    		</td>
-	    		<td>
-    				<button class="btn-delete">삭제</button>
-
-	    		</td>
-	    	</tr>
+	    	<c:forEach var="reply" items="${ board.replies }">
+	    	   	<tr class="level1">
+		    		<td>
+		    			<sub class="comment-writer">${ reply.writerId }</sub>
+		    			<sub class="comment-date">${ reply.createDate }</sub>
+		    			<br>
+		    			<span>${ reply.content }</span>
+		    		</td>
+		    		<td>
+		    			<c:if test="${ not empty loginMember && loginMember.id == reply.writerId}">
+		    				<button type="submit" id="btn-reply">삭제</button>
+		    			</c:if>
+		    		</td>
+		    	</tr>
+	    	</c:forEach>
 	    </table>
     </div>
 </section>
-
+<script>
+	$(document).ready(() => {
+		$('#btnDelete').on('click', () => {
+			if (confirm('정말로 게시글을 삭제 하시겠습니까?')) {
+				location.replace('${ path }/board/delete?no=${ board.no }');
+			}
+		});
+		
+		$('#fileDown').on('click', () => {
+			// 인터넷을 통해 전송할 수 있는 형식으로 변환하는 메소드 (인코딩 처리, 앞에 % 붙고 뒤에 16진수로 표기)
+			let oname = encodeURIComponent('${ board.originalFileName }');
+			let rname = encodeURIComponent('${ board.renamedFileName }');
+			
+			location.assign('${ path }/board/fileDown?oname=${ board.originalFileName }&rname=${ board.renamedFileName }');
+		});
+		
+		$('#replyContent').on('focus', () => {
+			if (${ empty loginMember }) {
+				alert('로그인 후 이용 해주세요.');
+				
+				$('#userId').focus();
+			}
+		});
+		
+		/* 댓글 삭제 작성중
+		$('#btn-reply').on('click', () => {
+			if (confirm('정말로 댓글을 삭제 하시겠습니까?')) {
+				location.replace('${ path }/reply/delete?no=${ reply.no }');
+			}
+		}); */
+	});
+</script>
 <jsp:include page="/views/common/footer.jsp" /> 
